@@ -1,17 +1,20 @@
-export const NEW_ACTION_USER = 'NEW_ACTION_USER';
-export const NEW_ACTION_EXPENSES = 'NEW_ACTION_EXPENSES';
-export const NEW_ACTION_GET_API = 'NEW_ACTION_GET_API';
+export const USER = 'USER';
+export const EXPENSES = 'EXPENSES';
+export const GET_API = 'GET_API';
 
 export const newActionUser = (email) => ({
-  type: NEW_ACTION_USER,
+  type: USER,
   email });
 
-export const newActionExpenses = (state) => ({
-  type: NEW_ACTION_EXPENSES,
-  state });
+export const newActionExpenses = (expenses) => ({
+  type: EXPENSES,
+  expenses,
+  valueAtual: Number(expenses
+    .exchangeRates[expenses.currency].ask) * Number(expenses.value),
+});
 
 export const newActionGetApi = (currencies) => ({
-  type: NEW_ACTION_GET_API,
+  type: GET_API,
   currencies });
 
 export const fetchApi = () => async (dispatch) => {
@@ -24,5 +27,16 @@ export const fetchApi = () => async (dispatch) => {
     dispatch(newActionGetApi(getFilter));
   } catch (error) {
     return error;
+  }
+};
+
+export const fetchApiExpenses = (expenses) => async (dispatch) => {
+  const api = 'https://economia.awesomeapi.com.br/json/all';
+  try {
+    const response = await fetch(api);
+    const data = await response.json();
+    dispatch(newActionExpenses({ ...expenses, exchangeRates: data }));
+  } catch (error) {
+    return console.log(error);
   }
 };

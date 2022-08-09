@@ -1,34 +1,38 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import WalletForm from '../components/WalletForm';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
-  render() {
-    const { emailState } = this.props;
-    return (
-      <>
-        <header>
-          <h1>TrybeWallet</h1>
-          <p data-testid="email-field">{emailState}</p>
-          <p data-testid="total-field">0</p>
-          <p data-testid="header-currency-field">Cambio: BRL</p>
-        </header>
-        <main>
-          <WalletForm />
-        </main>
+  // componentDidMount() {
+  //   // const { expenses } = this.props;
+  //   // console.log(expenses);
+  //   this.valueHeader();
+  // }
 
-      </>
+  // valueHeader = () => {
+  //   console.log('teste');
+  //   const { expenses } = this.props;
+  //   let saldoTotal = 0.00;
+  //   expenses.forEach((i) => {
+  //     const valorTotal = Number(i.despesa)
+  //       .toFixed(2) * Number(i.exchangeRates[i.currency].ask)
+  //       .toFixed(2);
+  //     saldoTotal += valorTotal;
+  //     this.setState({ valor: saldoTotal.toFixed(2) });
+  //     console.log(saldoTotal);
+  //   });
+  // }
+
+  render() {
+    // const { emailState } = this.props;
+    // console.log(expenses);
+    return (
+      <main>
+        <Header />
+        <WalletForm />
+      </main>
     );
   }
 }
 
-Wallet.propTypes = {
-  emailState: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  emailState: state.user.email,
-});
-
-export default connect(mapStateToProps)(Wallet);
+export default Wallet;
