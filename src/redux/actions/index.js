@@ -1,6 +1,7 @@
 export const USER = 'USER';
 export const EXPENSES = 'EXPENSES';
 export const GET_API = 'GET_API';
+export const REMOVE = 'REMOVE';
 
 export const newActionUser = (email) => ({
   type: USER,
@@ -40,3 +41,8 @@ export const fetchApiExpenses = (expenses) => async (dispatch) => {
     return console.log(error);
   }
 };
+
+export const newActionDeleteExpenses = (payload) => ({
+  type: REMOVE,
+  payload,
+});
