@@ -2,6 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import Wallet from '../pages/Wallet';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 
 describe('cobertura de testes', () => {
@@ -15,11 +16,11 @@ describe('cobertura de testes', () => {
     expect(button).toBeInTheDocument();
   });
   it('Testando o Login e a entrada na carteira', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />)
+    expect(history.location.pathname).toEqual('/');
 
-    ;
     const email = screen.getByTestId("email-input");
-    userEvent.type(email, 'denisv.daros@gmail.com');
+    userEvent.type(email, 'denis.daros@gmail.com');
 
     const senha = screen.getByTestId('password-input');
     userEvent.type(senha, '1234567');
@@ -27,8 +28,19 @@ describe('cobertura de testes', () => {
     const button = screen.getByRole('button', { name: /entrar/i });
     userEvent.click(button);
 
-    const Title = screen.getByText('TrybeWallet');
-    expect(Title).toBeInTheDocument();
+    const path = history.location.pathname;
+    expect(path).toEqual('/carteira');
   });
-  
+  it('Testando <wallet />', () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    const email = screen.getByTestId('email-field');
+    expect(email).toBeInTheDocument();
+
+    const expenses = screen.getByTestId('total-field');
+    expect(totalExpenses).toBeInTheDocument();
+
+    const currency = screen.getByTestId('header-currency-field');
+    expect(currency).toBeInTheDocument();
+  });
 });
